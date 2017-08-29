@@ -3,22 +3,23 @@ package com.cn.nlg.lp.ssm.springmvc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 /**
  * Created by Administrator on 2017/6/26.
- *管理springmvc的相关配置
+ * 管理springmvc的相关配置
  */
 @Configuration
 @EnableWebMvc
+@ImportResource(locations = {"classpath*:spring/spring-dataConfig.xml/"})
 @ComponentScan(basePackages = "com.cn.nlg.lp")
-public class SpringMvcConfiguration extends WebMvcConfigurerAdapter{
+public class SpringMvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean //内部资源视图解析器 配置 这是springmvc的核心渲染机制
-    public InternalResourceViewResolver viewResolver()
-    {
+    public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         //配置前后缀
         viewResolver.setPrefix("/views");
@@ -34,18 +35,19 @@ public class SpringMvcConfiguration extends WebMvcConfigurerAdapter{
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");
     }
-/*
-// 配置拦截器
-    @Bean
-    public DemoInterceptor demoInterceptor() {
-        return new DemoInterceptor();
-    }
-  //注册拦截器
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(demoInterceptor());
-    }
-*/
+
+    /*
+    // 配置拦截器
+        @Bean
+        public DemoInterceptor demoInterceptor() {
+            return new DemoInterceptor();
+        }
+      //注册拦截器
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(demoInterceptor());
+        }
+    */
     //空白转向注册
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
