@@ -15,6 +15,8 @@
         <module>lp-config</module>
         <module>lp-demo</module>
         <module>lp-common</module>
+        <module>lp-mybatis-auto</module>
+        <module>lp-jdk-read</module>
     </modules>
 
 
@@ -39,6 +41,7 @@
         <shiro.version>1.4.0</shiro.version>
         <aopalliance-repackaged.version>2.5.0-b43</aopalliance-repackaged.version>
         <mybatis.version>3.4.5</mybatis.version>
+        <mybatis-pagehelper.version>5.0.1</mybatis-pagehelper.version>
     </properties>
 
     <dependencies>
@@ -52,6 +55,12 @@
 
 
         <dependencies>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${mybatis-pagehelper.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>aopalliance</groupId>
