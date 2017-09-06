@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @since <pre>2017/9/6 </pre>
  */
 public class pool {
-    //     1.  创建一个可重用固定线程集合的线程池，以共享的无界队列方式来运行这些线程
+    //     1.  创建一个可重用固定线程集合的线程池，以共享的无界队列方式来运行这些线程,此线程没有超时时间，线程池不会自动扩张大小
     static ExecutorService threadPoolFixed = Executors.newFixedThreadPool(3);//
     //     2. 创建一个可根据需要创建新线程的线程池，但是在以前构造的线程可用时将重用它们。
     static ExecutorService threadPoolCached = Executors.newCachedThreadPool();
@@ -23,6 +23,7 @@ public class pool {
     static ExecutorService threadPoolSingle = Executors.newSingleThreadExecutor();
     //     4. 创建一个可安排在给定延迟后运行命令或者定期地执行的线程池。
     static ScheduledExecutorService threadPoolSchedule = Executors.newScheduledThreadPool(3);//
+
     Data data = new Data();
 
     public static void main(String[] args) {
@@ -53,30 +54,32 @@ public class pool {
         ScheduledFuture scheduledFuture = null;
 
         threadPoolFixed.submit(callable);
-//             threadPoolCached.submit(callable);
-//             threadPoolSingle.submit(callable);
-//             threadPoolSchedule.schedule(runnable,10, TimeUnit.SECONDS );
+        threadPoolCached.submit(callable);
+        threadPoolSingle.submit(callable);
+        threadPoolSchedule.schedule(runnable, 10, TimeUnit.SECONDS);
         scheduledFuture = threadPoolSchedule.schedule(callable, 1, TimeUnit.SECONDS);
         threadPoolSchedule.scheduleAtFixedRate(runnable, 2, 5, TimeUnit.SECONDS);
         //以固定延迟运行 withFixed
         threadPoolSchedule.scheduleWithFixedDelay(runnable, 2, 5, TimeUnit.SECONDS);
 
+        for (int i = 0; i < 5; i++) {
+            try {
+                scheduledFuture.get(3, TimeUnit.SECONDS);
+                System.out.println("运行次数 = [" + Thread.currentThread().getName() + "]");
+            } catch (ExecutionException e) {
+                System.out.println("[" + "执行异常" + "]");
+            } catch (TimeoutException e) {
+                System.out.println("获取超时");
+            } catch (InterruptedException e) {
+                System.out.println("  [" + "异常中断" + "]");
+            }
 
-        try {
-            scheduledFuture.get(3, TimeUnit.SECONDS);
-            System.out.println("运行次数 = [" + "]");
-        } catch (ExecutionException e) {
-            System.out.println("[" + "执行异常" + "]");
-        } catch (TimeoutException e) {
-            System.out.println("获取超时");
-        } catch (InterruptedException e) {
-            System.out.println("  [" + "异常中断" + "]");
         }
         // 任务执行完毕，关闭线程池
         threadPoolFixed.shutdown();
         threadPoolCached.shutdown();
         threadPoolSingle.shutdown();
-//        threadPoolSchedule.shutdown();
+        threadPoolSchedule.shutdown();
     }
 
     @Test
