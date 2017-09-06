@@ -1,24 +1,23 @@
 package com.cn.nlg.lp.jdk8;
 
+import com.cn.nlg.lp.jdk8.kata.ForEach;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ForEach Tester.
+ * ForEachDemo Tester.
  *
  * @author <Authors name>
  * @version 1.0
  * @since <pre>八月 31, 2017</pre>
  */
+
+@Slf4j
 public class ForEachTest {
 
-    private ForEach forEach = new ForEach();
-
-    @Before
-    public void before() throws Exception {
-        forEach.put();
-    }
+    private ForEachDemo forEach = new ForEachDemo();
+    private ForEach forEach1 = new ForEach();
 
     @After
     public void after() throws Exception {
@@ -33,7 +32,7 @@ public class ForEachTest {
         forEach.foreachBase();
 /*
 try {
-   Method method = ForEach.getClass().getMethod("foreachBase");
+   Method method = ForEachDemo.getClass().getMethod("foreachBase");
    method.setAccessible(true);
    method.invoke(<Object>, <Parameters>);
 } catch(NoSuchMethodException e) {
@@ -51,7 +50,7 @@ try {
         forEach.foreachBase();
 /* 
 try { 
-   Method method = ForEach.getClass().getMethod("foreachNew"); 
+   Method method = ForEachDemo.getClass().getMethod("foreachNew");
    method.setAccessible(true); 
    method.invoke(<Object>, <Parameters>); 
 } catch(NoSuchMethodException e) { 
@@ -61,4 +60,9 @@ try {
 */
     }
 
-} 
+    @Test
+    public void testExecutor() {
+        this.forEach1.execute();
+        log.debug("运行完毕");
+    }
+}
