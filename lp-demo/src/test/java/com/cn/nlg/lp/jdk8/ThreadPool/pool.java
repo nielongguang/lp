@@ -17,7 +17,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class pool {
     //     1.  创建一个可重用固定线程集合的线程池，以共享的无界队列方式来运行这些线程,此线程没有超时时间，线程池不会自动扩张大小
     static ExecutorService threadPoolFixed = Executors.newFixedThreadPool(3);//
-    //     2. 创建一个可根据需要创建新线程的线程池，但是在以前构造的线程可用时将重用它们。
+    //     2. 创建一个可根据需要创建新线程的线程池，但是在以前构造的线程可用时将重用它们，过时时间为60秒，但是所有线程都会过期，不会保持
     static ExecutorService threadPoolCached = Executors.newCachedThreadPool();
     //     3. 创建一个使用单个 worker 线程的 Executor，以无界队列方式来运行该线程。
     static ExecutorService threadPoolSingle = Executors.newSingleThreadExecutor();
@@ -64,6 +64,7 @@ public class pool {
 
         for (int i = 0; i < 5; i++) {
             try {
+
                 scheduledFuture.get(3, TimeUnit.SECONDS);
                 System.out.println("运行次数 = [" + Thread.currentThread().getName() + "]");
             } catch (ExecutionException e) {

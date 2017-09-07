@@ -41,21 +41,21 @@ public class lockornot {
 //        list.add(es.submit(runnable3));
 //        log.info("r3>>>end");
 //        list.add(es.submit(runnable4));
-//        //线程不安全
-//        log.info("r4>>>end");
-//        Runnable runnable5 = () -> output.output2("zhangsan");
-//        Runnable runnable6 = () -> output.output2("lisi");
+        //线程不安全
+        log.info("r4>>>end");
+        Runnable runnable5 = () -> output.output2("zhangsan");
+        Runnable runnable6 = () -> output.output2("lisi");
 //        list.add(es.submit(runnable5));
 //        log.info("r5>>>end");
 //        list.add(es.submit(runnable6));
 //        log.info("r6>>>end");
 
-        Runnable runnable7 = () -> output.output3("zhangsan");
-        Runnable runnable8 = () -> output.output3("lisi");
-        list.add(es.submit(runnable7));
-        log.info("r7>>>end");
-        list.add(es.submit(runnable8));
-        log.info("r8>>>end");
+//        Runnable runnable7 = () -> output.output3("zhangsan");
+//        Runnable runnable8 = () -> output.output3("lisi");
+//        list.add(es.submit(runnable7));
+//        log.info("r7>>>end");
+//        list.add(es.submit(runnable8));
+//        log.info("r8>>>end");
         for (Future future : list) {
             try {
                 future.get();
@@ -115,10 +115,12 @@ class Outputter {
         System.out.println();
     }
 
+
     /**
      * 线程不安全的类
      */
     void output2(String name) {
+
         for (int i = 0; i < name.length(); i++) {
             System.out.print(name.charAt(i));
             try {
@@ -127,6 +129,7 @@ class Outputter {
                 log.info("异常中断");
             }
         }
+
         System.out.println();
     }
 
