@@ -39,31 +39,34 @@ public class SignalTest2 {
                 }
             };
         };
-        Runnable runnable = factory.newInstans(b, "sub1");
-        Runnable runnable1 = factory.newInstans(b, "sub2");
-        Runnable runnable2 = factory.newInstans(b, "sub3");
-        ExecutorService es = Executors.newFixedThreadPool(5);
-        List<Future> list = new LinkedList<>();
-        list.add(es.submit(runnable));
-        list.add(es.submit(runnable1));
-        list.add(es.submit(runnable2));
-        list.forEach((a) -> {
+        for (int i = 0; i < 2; i++) {
+
+
+            Runnable runnable = factory.newInstans(b, "sub1");
+            Runnable runnable1 = factory.newInstans(b, "sub2");
+            Runnable runnable2 = factory.newInstans(b, "sub3");
+            ExecutorService es = Executors.newFixedThreadPool(5);
+            List<Future> list = new LinkedList<>();
+            list.add(es.submit(runnable));
+            list.add(es.submit(runnable1));
+            list.add(es.submit(runnable2));
+            list.forEach((a) -> {
+                try {
+                    a.get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
             try {
-                a.get();
+                System.out.println(es.isShutdown());
+                es.shutdownNow();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
 
-        try {
-            System.out.println(es.isShutdown());
-            es.shutdownNow();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
     }
-
     private class Business {
         int status = 1;//开始默认执行第一个方法
         Lock lock = new ReentrantLock();

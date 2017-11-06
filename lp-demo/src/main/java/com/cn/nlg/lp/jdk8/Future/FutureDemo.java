@@ -18,7 +18,6 @@ public class FutureDemo {
 
     Runnable runnable1 = () -> System.out.println("runnable: " + Thread.currentThread().getName());
     Callable<String> callable = () -> {
-
         System.out.println("callable: " + Thread.currentThread().getName());
         return "something";
     };

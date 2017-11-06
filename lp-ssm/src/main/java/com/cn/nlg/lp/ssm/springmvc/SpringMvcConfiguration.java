@@ -58,7 +58,6 @@ public class SpringMvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
         configurer.setUseRegisteredSuffixPatternMatch(false);
-
     }
 
 

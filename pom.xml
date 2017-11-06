@@ -17,6 +17,7 @@
         <module>lp-common</module>
         <module>lp-mybatis-auto</module>
         <module>lp-jdk-read</module>
+        <module>lp-websoket</module>
     </modules>
 
 
